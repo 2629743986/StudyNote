@@ -1,0 +1,210 @@
+外健是另一张表的主键一个表不一定要有主键 但是最好都要有数据库对外提供的一个接口sql
+Oracle中如果你用* 的话会比你用全部列慢一点,因为Oracle必须把*转化成那些列,这就要花点时间,所以还不如一开始就自己全部写那些列(如果你是用程序查询,推荐自己全部把列写出来,会比较快)
+在sqlplus中可以用;  或者/ 来表示sql的结束 .记住是在sqlplus里面,其他的还不知道
+而且在sqlplus中你会发现数字型都是右对齐的,而字符串类型都是左对齐的 哈哈
+这个其实是可以改的
+算数表达式可以用在除了from子句外的所有子句 只有from字句中不能使用算数表达式
+NULL 值: 中间状态 三元逻辑 NULL is not the same as zero or a blank space. NULL值不是0 也不 是空格如果一个算数表达式中有个NULL,那么它全部的值都是NULLArithmetic expressions containing a null value evaluate to null
+Alias别名Renames a column heading is useful with calculations Immediately follows the column name(There can also be the optinonal AS keyword between the column name and alias) 直接用 空格 也可以跟关键字 asRequires double quotation marks if it contians spaces or special characters, or if it is case-senstive.如果别名里面有其他一些空格特殊字符 或者大小写敏感的.用双引号包裹起来就可以了
+连接字符 Concatenation OperatorLinks columns or character strings to other columns is represented by two vertical bars(||)creates a resultant column that is a charater exressionselect last_name||job_is as 'Employees' from employess;那么结果就会产生一个新的列Employees黄飞龙Programmer可以手动加空格select last_name||' '||job_is as 'Employees' from employess;
+可读性更好了双引号用来引用别名单引号用来引用 literal charater strings 这两句话讲什么都看不懂
+用||包围起来还是一个列,只是这个列的值被拼接起来了.
+select last_name || ' is a '|| job_id as "Employee Details" from employees;   //  其实也可以不用" " 来进行包围的
+distinct  是所有select 列的组合,而不是单单一个列 比如 distinct id,name 那么就是id和name是唯一的,而不是单单看一列,必须这两列组合起来是唯一的.
+可以通过这个语句查询当前用户所拥有的表select table_name from user_tables;user_tables 好像加什么视图 还是什么字典 不懂
+where clause 不能使用别名 where 字句后面不能使用别名,必须使用这个列的真正的名字 where clause follows from clause (where字句跟在from字句后面,但是也不是必须的,就是如果有出现where字句就是表示它是跟着from字句,其实这句话这样说了也是白说)字符和日期用单引号字符串(值)是大小写敏感的可以用这个不管值是大小写,都可以查出来 date 默认格式 DD-MON-RR(日月年) 可以更改 就是完全颠倒过来
+不等于<>大于等于>=is  a null value    is NULLlike match a character between 2500 and 3500; 可以用and 一起来替换一下in(100,200,101);  用OR 替换 其实内部都是用 or    in的速度没有or快   
+wildcard---通配符like  %    denotes zero or many characters_     denotes one character
+查询95年入职的员工可以用 and 或者 between   hiredate between '1995-01-01' and '1995-12-31';但是也可以用 likewhere hire_date like '%95';  这个方法比较投机取巧如果用like查询的时候,本身就有%_这样的字符,这个时候就可以用转义字符 在前面加上  \ 要加上escape这个这个例子是转义了_  这个特殊的字符
+ 也可以用其他字符转义,跟escape对应起来就可以了
+NULL参与字符串连接,就相当于什么都没做where manager_id is NULL(is not NULL)  (这个例子举得不是很好)
+优先级: 反正使用括号就可以了
+ 
+asc Ascending order defalut        asc=ascenddesc descending order               desc=descendThe order by clause comes last in the select statement ordey by 字句在select字句的最后面
+order by 可以使用别名
+Sorting by using the column's numeric positionorder by 2 就是select语句后面的第二个字段 (前提是select后面的列数要有)Sorting by multiple columns先排序前面的,再排序后面的  NULL默认是最大的 在升序的时候NULL值是放在最后在降序的时候NULL值是放在第一个可以在order by  salary desc NULLS LAST 这样子就规定了降序的时候NULL值放在最后一个
+可以用&来表示一个变量 然后就会提示让你输入一个具体的值如果是一个字符串 要这样子 '&job_title' ,是字符串,就必须自己用  '   '(两个单引号) 包围起来 数值就不需要&几乎可以用在select语句任何地方它只负责拼接.在输入的时候不校验,输入者必须保证数据的类型是正确的&&可以临时保存那个变量,下次再遇到那个变量,就不需要再输入 这个不用管也可以自己定义 define 变量名=值(这个其实用的很少,可以忽略)  
+Single-Row Functions对每一行进行操作[ ] 表示里面的东西可有可无字符串函数Case-conversion functions(大小写转化函数)lower upperinitcap 只有首字母大写 其他都是小写
+Character-manipulation functions(字符操作函数)concatsubstr('HelloWord',1,5)-->Hello  从第一个开始的连续五个字母  这边下标都是从1开始的lengthinstr('Helloworod','w')--->6lpad|rpadtrimreplace
+ 
+
+
+ Number Functions  (数字函数)round  四舍五入trunc 直接砍掉   trunc(45.926,2)=45.92(直接砍掉 没有四舍五入)mod  这个就不用说了round(m,n) 精确到第n位,小数点后面第一位是n=1.小数点前面第一位是0 以此类推     
+
+ 
+  
+  其实对日期进行round 和trunc 感觉根本就不会用到吧,用到的时候再查一下sql 语句中缺少if else 这样的语句 很遗憾
+隐示转化                                                        显示转化  varchar2() 不定长   浪费时间  最长4000个字符  char 定长 浪费空间                 最长2000个字符  因为Oracle日期格式和我们中国用的格式不太一样,所以我们一般都是用to_char()来进行格式的转化 
+  如果有前导0 可以用fm去掉 
+ 
+
+上面那个也不常用到
+   如果后面的长度小于前面的,那么就会出现####
+Nesting Functions:这个其实很好理解的
+ General Functions用来替代 if else (PLSQL)NVL functionNVL(arg1,arg2) 如果第一个参数是null 就返回第二个参数,如果第一个参数不是null 就返回第一个参数
+NVL2(arg1,arg2,arg3)如果第一个参数是非空就返回第二个参数 是空的就返回第三个参数
+coalesce 融合函数直到遇到第一个非null值就返回
+ 
+Conditional Expressions Case 是国际标准Decode 是Oracle规定的 
+
+ 
+另一个例子:
+ 
+
+这个国际标准比较麻烦,所以Oracle又提供了一个Decode function 刚才那个例子改一下就变成这个样子了 0-1999 不需要税率 2000-3999 需要交0.09的税率最后0.45 表示的是默认,这种默认的值应该只能有一个,不然Oracle就不知道是谁的了
+ Group Functions  group_function(column) 不计算null值,如果想计算 可以用NVL将null转化为0 而且默认计算全部的值,可以通过 distinct column来计算不重复的列
+min 和 max 也可以用来计算数值 字符 和日期(在oracle中是用数值存储)
+count(expr)是计算个数的(非NULL的值才会被计算)return the number of rows with non-null values 
+ 1 和* 都差不多  1的速度可能会比较快但是计算commission_pct的时候因为有些职位是没有补贴的,所有有些行的commission_pct是空的
+
+
+ 聚合函数都是默认忽略掉null值的 
+ 第一个数比较大的原意是因为它不计算NULL的值,所以分母个数自然变少了 而第二个把NULL的行转化为0 分母变大了 
+在group by后面出现的列不一定要在select后面出现但是在select后面出现的列一定要出现在group by后面(不考虑聚合函数 aggregate function)(上面这句话在mySQL是不成立的.,MySQL是随便选一个如果group by之后不能确定是哪一个)
+All columns in the select list that are not in group functions must be in the group by clause.如果出现在select 列表中的类没有被聚合函数包围的话,那么它必须出现在group by里面这句话很重要还有这句话Any column or expression in the select list that is not an aggregate function must be in the group by clause这句话跟上面那句话挺接近的.
+order by 都是最后一个执行的 因为order by其实很耗时的,所以先让前面那些都做完之后,最后再进行排序
+ 别名可以用在order by里面,但是不能用在group by中 感觉第一个例子,并没有对应起来上面说的那句话,倒是第二个例子有对应起来.
+ 第一个例子 既然用到了count()那么就是表示组,如果单单一个departmen_id数据库也不知道取哪一个.总之一个原则就是,Oracle必须清楚的知道它要显示的内容,绝对不能模棱两可,或者从一个组中选一个来显示.
+ 
+因为先执行 from 然后 where 所以不能在where里面使用聚合函数后面才执行group by那些语句不能用 where 来约束groups 因为感觉这样子很奇怪
+  哈哈最后这个例子有趣
+
+马上就要开始多表查询了激动
+也可以用子连接
+  
+Oracl语法  Oracle 别名直接加空格别名的名字
+
+这里面出错是因为在where子句中的employees.department_id 出错的.因为在from中已经将employees 取别名为e 所以在where字句中必须使用e 这里面跟列去别名是不一样的.
+select emp.* ,d.* fromemp e,dept dwhere e.deptno=d.deptno ORA-00904: "EMP": 标识符无效这样子也是错的,说明,如果一张表取了别名,那么必须用这个别名来进行后面的操作,不能再弄原来的表名了......
+下面这种连接没看懂,没事,因为很少用,后面会用on代替,所以下面这个看看就好了自然连接,就是我们平时写的最多的那个. 第三个条件要求类型也要一样.
+    上面是国际写法 
+应该是自动的去比较两种表中相同属性的字段和值
+还可以加 where 字句 这个匹配名字 和匹配类型 都要相同而Using只要名字相同即可 好像是这样子的
+
+ 如何两个表有两列都是相同的,那么 natural join会匹配两列但是有时候只想匹配一列,这个时候就必须用到 using
+ 
+ 用一个ON就够了前面那两个可以忽略掉直接用Oracle的那个写法吧就是 where condition and condition 
+ Join a table to itself查找某一个雇员的老板,他们都在一张表里面
+ 这种写法不会把King(终极boss) 忽略掉 好像也会忽略掉,因为他好像不是左连接,而是内连接因为这种写法其实和下面那种意思是完全一样的,只是语法不一样,明天测试一下
+果然,这种方式只会显示出来这样子  (测试完毕)SQL> select worker.ename emp ,manager.ename mgr  2  from emp worker join emp manager  3  on (worker.mgr=manager.empno); EMP        MGR---------- ----------FORD       JONESSCOTT      JONESTURNER     BLAKEALLEN      BLAKEWARD       BLAKEJAMES      BLAKEMARTIN     BLAKEMILLER     CLARKADAMS      SCOTTBLAKE      KINGJONES      KINGCLARK      KINGSMITH      FORD13 rows selected很明显没有显示出来King 虽然他没有老板
+ 这种写法其实是错的,因为King不会显示出来.
+
+这里还有一个问题,不是说where中不能使用别名吗where 中不能使用列的别名,但是必须使用表的别名(如果这个表是有别名的)  而且还有一点很重要的是,where是比select先执行的,所以在select中的别名对where来说根本就不存在的,而where是在from后面执行的,所以from中对表取的别名,对where来说是存在的,至于为什么from中对表取了别名之后,where必须用别名的原因在下面我终于明白了,因为有自连接的存在,所以两张表可能是同一张表这个时候如果不再where字句中使用表的别名的话,那么Oracel就不知道要取那张表(比如这个例子,emp 分别取了两个不同的别名)所以感觉是因为自连接才出现别名这些问题的.
+  between 
+outJoin 可以显示一些没有匹配到的数据 如果只是写一个join 就是 inner join
+所以以前每次看SQL语句总是感觉为什么会有两种写法,原来没有on的那种写法是Oracle本身的,有ON的那种是国际版本的终于清楚了,这个视频还是可以给99分的
+ 左边那个加号表示左连接 左边全部匹配起来
+
+为了避免笛卡尔积记得always 包含一个有效的  join 条件
+ 产生大量数据的时候用到笛卡尔积. 所以一般都是加上条件来缩小笛卡尔积的用Oracle自带的那个比较好
+子查询先执行内部查询,然后再执行外部查询
+这上面只是说一下,查询的时候写的格式最好写好看一点而已.便于阅读吧
+  where里面可以像上面那样子带条件,但是不能是那种 where avg(sal)>100; 不能这种方式使用分组函数
+
+查找最低工资比部门号为50的员工最低高的部门.
+ 
+ 查询平均工资最低的部门 在emp表中是这样的SQL> select deptno, avg(sal) from emp group by deptno; DEPTNO   AVG(SAL)------ ----------    30 1566.66666    20       1595    10 2916.66666SQL> select deptno         from emp         group by deptno         having avg(sal)=(select min(avg(sal)) from emp group by deptno); DEPTNO------    30
+
+如果子查询返回null怎么办那就没找到数据
+多行结果  用 in any all <any    就是小于它的最大值   可以这样理解因为any后面一般都是跟着一些数值比如(1,5,8)那么小于这里面的任何一个只要小于<8不就行了>any    就是大于它的最小值<all      小于它的最小值>all      大于它的最大值反正any就是其中的随便一个,all要全部18讲有点难  有时间再看看
+集合操作UNION       有重复的只会出现一次UNIONALL 有重复的会出现两次INTERSECT  交集(这个单词相交的意思)MINUS 相减集合是没有顺序的 可以理解在列上拼接就是UNION前面查出来的数据,显示出来,然后再拼接UINON后面拼接出来的数据竖着拼接这里举例一下: ​SQL> select * from emp; EMPNO ENAME      JOB         MGR HIREDATE          SAL      COMM DEPTNO----- ---------- --------- ----- ----------- --------- --------- ------ 7369 SMITH      CLERK      7902 1980/12/17     800.00               20 7499 ALLEN      SALESMAN   7698 1981/2/20     1600.00    300.00     30 7521 WARD       SALESMAN   7698 1981/2/22     1250.00    500.00     30 7566 JONES      MANAGER    7839 1981/4/2      2975.00               20 7654 MARTIN     SALESMAN   7698 1981/9/28     1250.00   1400.00     30 7698 BLAKE      MANAGER    7839 1981/5/1      2850.00               30 7782 CLARK      MANAGER    7839 1981/6/9      2450.00               10 7788 SCOTT      ANALYST    7566 1987/4/19      100.00               20 7839 KING       PRESIDENT       1981/11/17    5000.00               10 7844 TURNER     SALESMAN   7698 1981/9/8      1500.00      0.00     30 7876 ADAMS      CLERK      7788 1987/5/23     1100.00               20 7900 JAMES      CLERK      7698 1981/12/3      950.00               30 7902 FORD       ANALYST    7566 1981/12/3     3000.00               20 7934 MILLER     CLERK      7782 1982/1/23     1300.00               10 14 rows selectedUnion 用法SQL> select ename,job  2  from emp  3  union  4  select ename,job  5  from emp; ENAME      JOB---------- ---------ADAMS      CLERKALLEN      SALESMANBLAKE      MANAGERCLARK      MANAGERFORD       ANALYSTJAMES      CLERKJONES      MANAGERKING       PRESIDENTMARTIN     SALESMANMILLER     CLERKSCOTT      ANALYSTSMITH      CLERKTURNER     SALESMANWARD       SALESMAN 14 rows selectedUNION allSQL> select ename,job  2  from emp  3  union all  4  select ename,job  5  from emp; ENAME      JOB---------- ---------SMITH      CLERKALLEN      SALESMANWARD       SALESMANJONES      MANAGERMARTIN     SALESMANBLAKE      MANAGERCLARK      MANAGERSCOTT      ANALYSTKING       PRESIDENTTURNER     SALESMANADAMS      CLERKJAMES      CLERKFORD       ANALYSTMILLER     CLERKSMITH      CLERKALLEN      SALESMANWARD       SALESMANJONES      MANAGERMARTIN     SALESMANBLAKE      MANAGER ENAME      JOB---------- ---------CLARK      MANAGERSCOTT      ANALYSTKING       PRESIDENTTURNER     SALESMANADAMS      CLERKJAMES      CLERKFORD       ANALYSTMILLER     CLERK 28 rows selected InterSect (相交)SQL> select ename,job  2  from emp  3  intersect  4  select ename,job  5  from emp; ENAME      JOB---------- ---------ADAMS      CLERKALLEN      SALESMANBLAKE      MANAGERCLARK      MANAGERFORD       ANALYSTJAMES      CLERKJONES      MANAGERKING       PRESIDENTMARTIN     SALESMANMILLER     CLERKSCOTT      ANALYSTSMITH      CLERKTURNER     SALESMANWARD       SALESMAN 14 rows selectedminus(相减)SQL> select ename,job  2  from emp  3  minus   4  select ename,job  5  from emp; ENAME      JOB---------- ---------!!没有记录哈哈
+
+UNION ALL 是不排序的 
+
+
+ 集合操作看的不是很熟悉,但是这个用的也不是很多
+Control Transaction一般都是用在修改上面,查询一般都不用到事务 银行转账
+Enclose character and date values within single quotation marks复制一个表 快速法create table copy_departments as select * from departments;而且里面还会有之前的数据 非常方便用来进行测试 
+
+ 批量插入 数据类型要对应起来 不需要values 这个关键字TRUNCate 清楚数据而已,表结构还在,因为没有把这些数据写入到数据库中,所以不会回滚,也就节省了时间了,所以执行速度会比较快.
+Update more than one row at a time(if required) 
+
+  上面这个写法很明显是错的, 第二行应该写成  id in (...)很有可能返回的结果是多行的也是醉了truncate 截断
+ truncate是一个ddl语句 不能easily be undone不能回滚了
+1.DDL（Data Definition Language）数据库定义语言statements are used to define the database structure or schema.DDL是SQL语言的四大功能之一。
+用于定义数据库的三级结构，包括外模式、概念模式、内模式及其相互之间的映像，定义数据的完整性、安全控制等约束
+DDL不需要commit.
+CREATE
+ALTER
+DROP
+TRUNCATE
+COMMENT
+RENAME
+
+2.DML（Data Manipulation Language）数据操纵语言statements are used for managing data within schema objects.由DBMS提供，用于让用户或程序员使用，实现对数据库中数据的操作。
+DML分成交互型DML和嵌入型DML两类。
+依据语言的级别，DML又可分成过程性DML和非过程性DML两种。
+需要commit.
+SELECT
+INSERT
+UPDATE
+DELETE
+MERGE
+CALL
+EXPLAIN PLAN
+LOCK TABLE
+
+3.DCL（Data Control Language）数据库控制语言  授权，角色控制等
+GRANT 授权
+REVOKE 取消授权
+
+4.TCL（Transaction Control Language）事务控制语言
+SAVEPOINT 设置保存点
+ROLLBACK  回滚
+SET TRANSACTION
+
+
+//todo 没怎么看懂上面这段话
+ 这里的start和end是表示,开启事务和结束事务(当结束事务的时候,就表示这个事务已经提交上去了,)
+  但是如果这三个保存点中间的任意一个你 commit 那么commit之前的保存点就没了第一个保存点是默认的 可以直接打rollback就回到你刚打开plsqldeveloper的时候
+rollback to savepoint x
+
+
+ 如果正常退出PLsqlDeveloper的时候 会自动commit但是如果是异常退出,或者系统异常就会 执行rollback 也就是说回滚到上一次commit提交的时候.通俗的说就是上次commit到异常退出的这一段都没有白做了.那也就是没有rollback吧,可是视频上说什么rollback 可能是我理解错了吧
+
+Oracle默认是不主动提交事务可以用这个命名打开默认执行一条语句之后就自动提交事务set auto onSQL> set auto on;Cannot SET AUTO尴尬.....在commit和rollback之前的数据状态1 数据可以恢复2 当前的用户可以通过select语句来检查DML操作的结果3 其他的用户不能看到当前用户通过DML操作造成的结果4 这一点和第三点和像,受影响的行被锁起来了,其他用户不能改变这些行 commit之前数据是放在内存中 还没写入磁盘中
+commit之后的状态1 改变的数据写入到数据库里面去了(之前应该只是在内存中)2 之前的数据状态被覆盖了3 所有的用户都可以看到结果了4 之前被锁定的行被释放了,现在其他用户也可以操作了5 所有的保存点都被清除掉了
+ 语句级的 RollBack1 如果一个简单的DML操作失败,那么只有这个语句会回滚2 
+  
+通过for update来进行锁定.
+ 数据对象不仅仅是表:还有 视图 序列,索引,同义词(Give alternative name to an object 给一个对象取一个别名吗??)
+ 数据字典是   Oracle   内部维护信息的一些表
+
+user_objects好像是数据字典的一种
+
+ 有些数据类型不用理他因为已经开始没用了
+ROWID是一个伪列,每一行都有这个属性,它只是用来唯一标识这一行的没什么用,平时都不会显示出来,但是你想看的时候,也可以显示出来
+ 
+ 
+通过desc查看表的约束不完整,可以用下面这个语句去查看select dbms_metadata.get_ddl('TABLE','TABLE_NAME') from dual;
+NOT NULL 只能在列级别约束(好像)
+
+UNIQUE这个约束其实很慢,它不像NULL这样,一下子就可以判断出来,所以Oracle会在UNIQUE这一列建立一个索引,有了这个索引,下次有10000多条记录也不怕了.这个索引可以在user_objects这个表里面查到为什么建立了这个索引,查找速度就变快了,是用了什么高级的算法吗?B+Tree??
+unique 可以组合多列.你懂得unique可以插入null 因为null是无法比较的,所以可以再这一列插入多个null
+一个表最多只能有一个主键约束,可以没有,最好要有创建主键之后,也会在user_objects这个表中多一条数据.而且数据类型是index.也就是说Oracle自动的将主键也创建一个索引
+外键约束可以为空  
+第三条 比如过你删除部门表中的某一个部门号,然后这个部门号已经被员工表应用了,那么这个时候是不能删的,但是你加上on delete cascade的话,就在删除部门号的时候,员工表中是这个部门号的员工也一起删掉了
+第四条就是不删除员工,只是把员工中的部门号那一栏变成null
+
+ 
+用子查询建立一个新的表,但是有时候不想要数据   (用到关键字 as) 可以用where 1=0;
+而且这种方法只有NOT NULL 可以传递过去,其它约束条件是不会传过去的
+  
+drop table 是他妈的全部删除.连表结构都没有了
+视图 比方说有一个员工表,但是我不想给别人看这个表的全部字段这个时候就可以创建一个视图,指定特定的列.而且View没有存数据只是存了查询语句,你调用View的时候,它其实再去基表也就是员工表那里面去查View理解成是一个接口吧
+视图的优点1 限制数据的访问2 让复杂的查询变得简单一些3 提供数据的独立性 (independence 独立  dependence依赖,多个in不依赖了)4 对同一份数据提供不同的视图
+Oracle中以$开头的一般都是动态性能视图
+ 
+//todo 如果你对view进行了修改,那么基表的数据也会跟着相应的变化     什么意思
+取了别名之后,之后要访问这个视图就用这个别名吧
+   很简单啊
+所以下次这些语句你可以直接写在一个view里面.下次直接调用就可以了,这样子的话只要写一次就可以了,不要再写那么麻烦的sql查询语句了
+  rownum 和 rowid是一个伪列 看个栗子就知道了 
+
+ Sequences 是一个独立的对象
+   最后一讲了,好累啊 看了一个晚上了Index  improves the perfomance of some queries
+
+使用索引是Oracle自己使用的
+添加索引之后会对 u d s这三个DML有那么一点影响因为这三个操作完之后必须再对索引进行维护在 性别上 就没必要建立索引 因为就两个值如果你要查询出来的数据占总数据的50%以上,那么就没有必要建立索引了,但是在2%和4%之间就非常有必要了就是说如果数据占据的行数比较少的时候就可以建立索引了www.boobooke.com SQL FUNDAMENTALS i EXAM GUIDE ADMINISTRATION i EXAM GUIDE
+ 
+
