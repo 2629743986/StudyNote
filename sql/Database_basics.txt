@@ -1,0 +1,19 @@
+http://blog.csdn.net/level_level/article/details/4248685
+上面这篇可能会有错
+下面这篇比较好一点
+http://www.tech-recipes.com/rx/55356/dml-ddl-dcl-and-tcl-statements-in-sql-with-examples/
+
+DML: SELECT  INSERT  UPDATE  DELETE(针对表中的数据)
+主要是影响数据中表的记录(DML statements affect records in a table)
+
+DDL: CREATE     ALTER    DROP(针对表的结构和模式)
+(DDL statements are used to alter/modify a database or table structure and schema.
+These statements handle the design and storage of database objects.)
+
+DCL: GRANT REVOKE  (针对用户的访问级别)
+DCL statements control the level of access(访问级别) that users have on database object .
+
+TCL(Transaction Control Laguage): BEGIN TRAN COMMIT ROLLBACK(针对事务)
+TCL statements allow you to control and manage transactions to maintain the 
+integrity of data within SQL statements.
+//in case of any error 万一有任何错误
