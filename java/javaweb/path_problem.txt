@@ -1,0 +1,21 @@
+绝对路径以斜杠(/)开头，相对于当前的Web应用程序的上下文路径;
+相对路径不以斜杠(/)开头，相对于当前执行的action的路径，也就是namespace指定的路径。
+为什么决定路径要以 / 开头 ,可以理解成  /  就是代表上下文路径
+
+例如：
+  <package name="default" extends="struts-default" namespace="/admin">
+    <action name="login" class="com.ibm.LoginAction">
+            <result>success.jsp</result>              //  /Shop/admin/success.jsp
+            <result name="error">/error.jsp</result>  //    /Shop/error.jsp
+    </action>                                         //  以"/"开头的就是绝对路径
+ </package>
+ 
+如果当前Web应用程序的上下文路径是/Shop
+那么请求/Shop/admin/login.action,执行成功后，转向的页面路径为：/Shop/admin/success.jsp;
+执行失败后，转向的页面路径为/Shop/error.jsp.
+
+CLASSPATH 是类路径 从src 这里开始算起 
+
+引入js的时候路径最好可以这样写
+<!-- [jQuery] -->
+<script type="text/javascript" src="${staticPath}/static/easyui/jquery.min.js" charset="utf-8"></script>
