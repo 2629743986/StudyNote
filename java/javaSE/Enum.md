@@ -1,7 +1,9 @@
+# 原文地址: https://www.javatpoint.com/enum-in-java
+### 自己进行了整理和归纳
 ## Enum in java is a data type that contains fixed set of constants.
 ## The java enum constants are static and final implicitly.It is available from JDK 1.5
 ## Java Enums can be thought of as classes that have fixed set of constants.
-#Points to remember for Java Enum
+# Points to remember for Java Enum
 ## enum improves type safety
 ## enum can be easily used in switch## enum can be traversed
 ## enum can have fields, constructors and methods
