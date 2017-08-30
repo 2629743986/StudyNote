@@ -113,7 +113,7 @@ Output: WINTER 5
 ```
 ## 输出结果
 ```
-	It is not late for Spring when the Winter is coming
+It is not late for Spring when the Winter is coming
 Run Bary Run
 Winter is coming
 ```
